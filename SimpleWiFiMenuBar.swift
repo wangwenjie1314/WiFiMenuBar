@@ -30,8 +30,6 @@ class SimpleWiFiMenuBar: NSObject, NSApplicationDelegate {
     // MARK: - Application Lifecycle
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        print("SimpleWiFiMenuBar: 应用启动")
-        
         // 设置状态栏
         setupStatusBar()
         
@@ -40,20 +38,14 @@ class SimpleWiFiMenuBar: NSObject, NSApplicationDelegate {
         
         // 开始监控WiFi状态
         startMonitoring()
-        
-        print("SimpleWiFiMenuBar: 应用启动完成")
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        print("SimpleWiFiMenuBar: 应用即将退出")
-        
         // 停止监控
         stopMonitoring()
         
         // 清理资源
         cleanup()
-        
-        print("SimpleWiFiMenuBar: 应用退出完成")
     }
     
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
@@ -78,8 +70,6 @@ class SimpleWiFiMenuBar: NSObject, NSApplicationDelegate {
     
     /// 初始化WiFi监控
     private func setupWiFiMonitoring() {
-        print("SimpleWiFiMenuBar: 初始化WiFi监控")
-        
         // 初始化CoreWLAN客户端
         wifiClient = CWWiFiClient.shared()
         
@@ -87,7 +77,6 @@ class SimpleWiFiMenuBar: NSObject, NSApplicationDelegate {
         guard let client = wifiClient,
               let interfaceNames = CWWiFiClient.interfaceNames(),
               let interfaceName = interfaceNames.first as? String else {
-            print("SimpleWiFiMenuBar: 无法获取WiFi接口")
             return
         }
         
@@ -102,14 +91,10 @@ class SimpleWiFiMenuBar: NSObject, NSApplicationDelegate {
                 self?.updateWiFiStatus()
             }
         }
-        
-        print("SimpleWiFiMenuBar: WiFi监控初始化完成")
     }
     
     /// 开始监控WiFi状态
     private func startMonitoring() {
-        print("SimpleWiFiMenuBar: 开始监控WiFi状态")
-        
         // 启动网络路径监控
         pathMonitor?.start(queue: monitorQueue)
         
@@ -120,20 +105,14 @@ class SimpleWiFiMenuBar: NSObject, NSApplicationDelegate {
         
         // 立即更新一次状态
         updateWiFiStatus()
-        
-        print("SimpleWiFiMenuBar: WiFi状态监控已启动")
     }
     
     /// 停止监控
     private func stopMonitoring() {
-        print("SimpleWiFiMenuBar: 停止监控")
-        
         updateTimer?.invalidate()
         updateTimer = nil
         
         pathMonitor?.cancel()
-        
-        print("SimpleWiFiMenuBar: 监控已停止")
     }
     
     /// 状态栏按钮点击事件

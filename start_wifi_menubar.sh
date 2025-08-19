@@ -3,6 +3,12 @@
 # WiFi状态栏应用启动脚本
 # 使用方法: ./start_wifi_menubar.sh
 
+# 检查应用是否已在运行
+if pgrep -f "SimpleWiFiMenuBar" > /dev/null; then
+    echo "WiFi状态栏应用已在运行中"
+    exit 0
+fi
+
 echo "正在启动WiFi状态栏应用..."
 
 # 检查应用是否已编译
@@ -18,6 +24,18 @@ if [ ! -f "SimpleWiFiMenuBar" ]; then
     fi
 fi
 
-# 启动应用
-echo "启动WiFi状态栏应用..."
-./SimpleWiFiMenuBar
+# 在后台静默启动应用
+echo "启动WiFi状态栏应用（后台运行）..."
+nohup ./SimpleWiFiMenuBar > /dev/null 2>&1 &
+
+# 等待一下确保应用启动
+sleep 1
+
+# 检查应用是否成功启动
+if pgrep -f "SimpleWiFiMenuBar" > /dev/null; then
+    echo "WiFi状态栏应用已成功启动并在后台运行"
+    echo "应用将在状态栏显示WiFi信息，只有关机或手动退出才会关闭"
+else
+    echo "应用启动失败，请检查权限设置"
+    exit 1
+fi

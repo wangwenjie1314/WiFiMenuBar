@@ -50,6 +50,11 @@ WiFiMenuBar/
 2. 选择目标设备为Mac
 3. 点击运行按钮构建和运行应用
 
+## 启动命令
+```bash
+./start_wifi_menubar.sh
+```
+
 ## 许可证
 
-待定
+MIT
