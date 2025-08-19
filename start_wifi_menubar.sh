@@ -11,17 +11,15 @@ fi
 
 echo "正在启动WiFi状态栏应用..."
 
-# 检查应用是否已编译
-if [ ! -f "SimpleWiFiMenuBar" ]; then
-    echo "应用未编译，正在编译..."
-    swiftc -framework Cocoa -framework CoreWLAN -framework Network SimpleWiFiMenuBar.swift -o SimpleWiFiMenuBar
-    
-    if [ $? -eq 0 ]; then
-        echo "编译成功！"
-    else
-        echo "编译失败，请检查错误信息"
-        exit 1
-    fi
+# 重新编译应用以确保使用最新代码
+echo "正在编译最新版本..."
+swiftc -framework Cocoa -framework CoreWLAN -framework Network SimpleWiFiMenuBar.swift -o SimpleWiFiMenuBar
+
+if [ $? -eq 0 ]; then
+    echo "编译成功！"
+else
+    echo "编译失败，请检查错误信息"
+    exit 1
 fi
 
 # 在后台静默启动应用
